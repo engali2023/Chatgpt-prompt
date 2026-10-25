@@ -1,0 +1,328 @@
+<!doctype html>
+<html lang="ar" dir="rtl" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0d1110">
+<title>Prompt Arcade — من الفكرة إلى فيديو Google Vids</title>
+<meta name="description" content="مختبر عربي تفاعلي لتوليد الأفكار وكتابة برومبتات فيديو احترافية باستخدام ChatGPT وGoogle Vids.">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&family=Pixelify+Sans:wght@400;500;600;700&family=Changa:wght@400;500;600;700;800&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap');
+@font-face{font-family:'Unixel Pixel';src:url('https://cdn.jsdelivr.net/gh/MDarvishi5124/Unixel@main/font/Unixel.ttf') format('truetype');font-style:normal;font-weight:400;font-display:swap}
+@font-face{font-family:'Unixel Pixel';src:url('https://cdn.jsdelivr.net/gh/MDarvishi5124/Unixel@main/font/Unixel-Bold.ttf') format('truetype');font-style:normal;font-weight:700;font-display:swap}
+:root{--bg:#0d1110;--surface:#151b18;--surface2:#1d2521;--text:#f1f5f2;--muted:#b4c0b8;--line:#39463f;--green:#10a37f;--green2:#19c99a;--mint:#a7f3d0;--cream:#e7f4ec;--shadow:5px 5px 0 #020604;--font:'Unixel Pixel','IBM Plex Sans Arabic','Changa',sans-serif;--head:'Unixel Pixel','Pixelify Sans','Silkscreen',monospace}
+[data-theme=light]{--bg:#f4f8f5;--surface:#fff;--surface2:#eaf2ed;--text:#15231b;--muted:#52645a;--line:#b8c9be;--green:#087f5b;--green2:#10a37f;--mint:#baf3d8;--cream:#e7f4ec;--shadow:5px 5px 0 #a5b7ab}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:86px}
+body{margin:0;background-color:var(--bg);color:var(--text);font-family:var(--font);font-size:17px;line-height:2;background-image:linear-gradient(#10a37f0b 1px,transparent 1px),linear-gradient(90deg,#10a37f0b 1px,transparent 1px);background-size:24px 24px;transition:background-color .2s steps(3),color .2s steps(3)}
+button,input,select,textarea{font:inherit}
+a{color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:3px solid var(--green2);outline-offset:4px}
+.skip{position:fixed;top:-70px;right:12px;z-index:200;background:var(--mint);color:#062117;padding:8px 14px;border:3px solid #071b12}.skip:focus{top:10px}
+.topline{height:5px;background:repeating-linear-gradient(90deg,var(--green) 0 18px,transparent 18px 24px,var(--mint) 24px 30px,transparent 30px 36px)}
+header{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:3px solid var(--text);box-shadow:0 4px 0 var(--green)}
+.navbar{max-width:1240px;margin:auto;min-height:74px;padding:12px 22px;display:flex;align-items:center;justify-content:space-between;gap:18px}
+.brand{display:flex;align-items:center;gap:12px;text-decoration:none;font-weight:700;font-size:18px}
+.brandmark{width:38px;height:38px;display:grid;place-items:center;background:var(--green);border:3px solid var(--text);box-shadow:3px 3px 0 var(--text);color:white;font-family:'Silkscreen',monospace;font-size:13px;direction:ltr}
+.brand small{display:block;color:var(--muted);font:10px/1.8 'Silkscreen',monospace;direction:ltr}
+.navlinks{display:flex;gap:6px;align-items:center}.navlinks a{text-decoration:none;padding:7px 9px;border:2px solid transparent;font-size:14px}.navlinks a:hover{border-color:var(--text);background:var(--mint);color:#0d2418}
+.actions{display:flex;gap:10px;align-items:center}
+.iconbtn{width:42px;height:42px;display:grid;place-items:center;border:2px solid var(--text);background:var(--surface);box-shadow:3px 3px 0 var(--text);color:var(--text);transition:transform .12s steps(2),box-shadow .12s steps(2)}
+.iconbtn:hover{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--text)}
+.menuBtn{display:none}
+.wrap{max-width:1240px;margin:auto;padding:0 24px}
+.hero{display:grid;grid-template-columns:1.04fr .96fr;gap:42px;align-items:center;padding-top:78px;padding-bottom:68px;min-height:610px}
+.kicker{display:inline-flex;gap:9px;align-items:center;border:2px solid var(--text);padding:5px 10px;box-shadow:3px 3px 0 var(--green);font-size:12px;background:var(--surface)}
+.kicker i{width:9px;height:9px;background:var(--green2);display:inline-block;box-shadow:2px 2px 0 var(--text);animation:blink 1s steps(2) infinite}
+h1,h2,h3,h4{margin:0;font-weight:700;line-height:1.65;letter-spacing:0}
+h1{font-size:clamp(36px,5vw,64px);margin:22px 0 18px;line-height:1.55}
+h1 .green{color:var(--green2);text-shadow:3px 3px 0 #064e3b}
+h2{font-size:clamp(28px,3.4vw,43px);line-height:1.65}
+h3{font-size:clamp(21px,2vw,27px)}
+p{margin:0 0 14px}
+.lead{color:var(--muted);font-size:19px;line-height:2.15;max-width:660px}
+.heroBtns{display:flex;flex-wrap:wrap;gap:14px;margin-top:26px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:12px 18px;border:2px solid var(--text);background:var(--surface);color:var(--text);box-shadow:4px 4px 0 var(--text);text-decoration:none;font-size:15px;font-weight:700;transition:transform .12s steps(2),box-shadow .12s steps(2)}
+.btn:hover{transform:translate(3px,3px);box-shadow:1px 1px 0 var(--text)}
+.btn.primary{background:var(--green);color:#fff;border-color:var(--text)}
+.btn.primary:hover{background:var(--green2);color:#062117}
+.tiny{font-size:12px;color:var(--muted);line-height:1.9}
+.hero-art{position:relative;min-height:430px;display:grid;place-items:center}
+.arcade{width:min(100%,480px);background:var(--surface);border:3px solid var(--text);box-shadow:9px 9px 0 var(--green);transform:rotate(-1deg);position:relative}
+.arcade-top{height:43px;display:flex;align-items:center;justify-content:space-between;padding:0 14px;border-bottom:3px solid var(--text);font:10px 'Silkscreen',monospace;direction:ltr}
+.lights{display:flex;gap:7px}.lights i{width:9px;height:9px;background:var(--green);border:1px solid var(--text)}.lights i:nth-child(2){background:#e7b94a}.lights i:nth-child(3){background:#e96b61}
+.arcade-screen{margin:18px;background:var(--surface2);border:3px solid var(--text);min-height:235px;position:relative;overflow:hidden;padding:22px}
+.pixel-sun{position:absolute;top:22px;left:35px;width:32px;height:32px;background:var(--green2);box-shadow:8px 0 var(--green2),-8px 0 var(--green2),0 8px var(--green2),0 -8px var(--green2);animation:sun 4s steps(4) infinite}
+.pixel-mountain{position:absolute;bottom:52px;right:25px;width:150px;height:90px;background:var(--green);clip-path:polygon(0 100%,30% 20%,48% 55%,67% 0,100% 100%)}
+.pixel-mountain.two{right:auto;left:14px;width:180px;height:72px;background:#527c67;opacity:.8}
+.pixel-ground{position:absolute;bottom:0;left:0;right:0;height:55px;background:repeating-linear-gradient(90deg,var(--green) 0 18px,#0d694e 18px 36px);border-top:4px solid var(--text)}
+.screen-caption{position:relative;z-index:2;font-size:12px;max-width:230px;background:var(--surface);border:2px solid var(--text);padding:8px 10px;box-shadow:3px 3px 0 var(--text)}
+.prompt-chip{position:absolute;z-index:3;background:var(--surface);border:2px solid var(--text);box-shadow:4px 4px 0 var(--text);padding:10px 12px;display:flex;gap:9px;align-items:center;font-size:12px}
+.prompt-chip img{width:27px;height:27px;image-rendering:pixelated}.chip-a{top:40px;right:-4px;animation:float 3.2s steps(5) infinite}.chip-b{bottom:35px;left:-10px;animation:float 3.7s steps(5) infinite reverse}
+.statline{display:flex;gap:22px;flex-wrap:wrap;margin-top:30px;color:var(--muted);font-size:13px}.statline strong{color:var(--text);font:12px 'Silkscreen',monospace;direction:ltr}
+.section{padding:76px 0;position:relative}.section:before{content:"";position:absolute;top:0;left:24px;right:24px;height:3px;background:repeating-linear-gradient(90deg,var(--green) 0 14px,transparent 14px 20px,var(--mint) 20px 28px,transparent 28px 34px)}
+.sectionHead{display:flex;justify-content:space-between;align-items:end;gap:28px;margin-bottom:30px}.label{font:11px/1.9 'Silkscreen',monospace;direction:ltr;color:var(--green2);margin-bottom:12px}.sectionHead p{max-width:510px;color:var(--muted);line-height:2;font-size:17px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.card{background:var(--surface);border:2px solid var(--text);box-shadow:5px 5px 0 var(--text);padding:24px;position:relative;transition:transform .15s steps(3),box-shadow .15s steps(3)}
+.card:hover{transform:translate(-2px,-3px);box-shadow:8px 8px 0 var(--green)}
+.card-icon{width:58px;height:58px;border:2px solid var(--text);box-shadow:3px 3px 0 var(--green);background:var(--surface2);display:grid;place-items:center;margin-bottom:20px}
+.card-icon img,.mini-icon{width:34px;height:34px;image-rendering:pixelated;animation:iconBob 2.8s steps(4) infinite}
+.card p{color:var(--muted);font-size:16px;line-height:2.1;margin-top:8px}
+.card .index{position:absolute;top:17px;left:18px;font:11px 'Silkscreen',monospace;color:var(--green2);direction:ltr}
+.flow{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.flowstep{background:var(--surface);border:2px solid var(--text);box-shadow:4px 4px 0 var(--text);padding:20px;min-height:170px;position:relative}
+.flowstep .n{font:13px 'Silkscreen',monospace;color:var(--green2);direction:ltr}
+.flowstep h3{font-size:19px;margin:13px 0 7px}.flowstep p{color:var(--muted);font-size:15px;line-height:2}
+.lab{background:var(--surface);border:3px solid var(--text);box-shadow:8px 8px 0 var(--green);display:grid;grid-template-columns:.9fr 1.1fr;gap:0}
+.lab-controls{padding:26px;border-left:3px solid var(--text);background:var(--surface2)}
+.lab-output{padding:26px;min-width:0}
+.lab-title{display:flex;align-items:center;gap:10px;margin-bottom:10px}.lab-title img{width:31px;height:31px;image-rendering:pixelated}
+.lab-intro{font-size:14px;color:var(--muted);line-height:2;margin-bottom:20px}
+.field{display:flex;flex-direction:column;gap:7px;margin-bottom:15px}
+.field label{font-size:15px;font-weight:700}
+.field input,.field select,.field textarea{width:100%;min-height:48px;padding:10px 12px;background:var(--bg);color:var(--text);border:2px solid var(--text);border-radius:0;box-shadow:3px 3px 0 var(--line);font-size:16px;line-height:1.9}
+.field textarea{min-height:95px;resize:vertical}
+.field input::placeholder,.field textarea::placeholder{color:var(--muted);opacity:.9}
+.twofields{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.output-empty{min-height:340px;display:grid;place-items:center;text-align:center;padding:28px;border:2px dashed var(--line);color:var(--muted)}
+.output-empty img{width:68px;height:68px;image-rendering:pixelated;margin-bottom:15px}
+.output-content{display:none}.output-content.show{display:block}
+.tabs{display:flex;gap:7px;flex-wrap:wrap;margin:18px 0}
+.tab{border:2px solid var(--text);background:var(--surface2);color:var(--text);padding:8px 11px;font-size:13px}.tab.active{background:var(--green);color:#fff}
+.prompt-text{white-space:pre-wrap;overflow-wrap:anywhere;background:var(--bg);border:2px solid var(--text);padding:18px;min-height:180px;font-size:15px;line-height:2.1;direction:ltr;text-align:left}
+.output-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+.output-actions .btn{font-size:13px;padding:9px 12px}
+.notice{font-size:12px;color:var(--muted);margin-top:12px;line-height:1.9}
+.lesson-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+details{background:var(--surface);border:2px solid var(--text);box-shadow:4px 4px 0 var(--text)}
+summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:15px;padding:18px;font-size:18px;font-weight:700}
+summary::-webkit-details-marker{display:none}summary:after{content:"+";font:18px 'Silkscreen',monospace;color:var(--green2)}details[open] summary:after{content:"−"}
+.detail-body{padding:0 18px 20px;color:var(--muted);font-size:16px;line-height:2.15}.detail-body strong{color:var(--text)}
+.example{margin-top:14px;background:var(--bg);border:2px solid var(--line);padding:14px;color:var(--text);font-size:14px;line-height:2;direction:ltr;text-align:left;white-space:pre-wrap}
+.sample-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.sample{padding:0;overflow:hidden}.sample-head{background:var(--surface2);border-bottom:2px solid var(--text);padding:16px;display:flex;align-items:center;gap:12px}.sample-head img{width:36px;height:36px;image-rendering:pixelated}.sample-body{padding:18px}.sample-body p{font-size:15px;color:var(--muted);line-height:2}.sample button{width:100%;margin-top:10px}
+.checklist{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.check{display:flex;align-items:start;gap:12px;background:var(--surface);border:2px solid var(--text);padding:15px;font-size:15px;line-height:2}
+.check input{accent-color:var(--green);width:20px;height:20px;flex:0 0 auto;margin-top:5px}
+.cta{padding:38px;border:3px solid var(--text);box-shadow:8px 8px 0 var(--green);background:var(--surface);display:flex;align-items:center;justify-content:space-between;gap:24px}
+.cta p{color:var(--muted);max-width:650px;margin-top:10px}
+footer{border-top:3px solid var(--text);padding:30px 24px;background:var(--surface);margin-top:45px}
+.footer-inner{max-width:1240px;margin:auto;display:flex;justify-content:space-between;align-items:center;gap:18px;flex-wrap:wrap}
+.credit{border:2px solid var(--text);padding:7px 11px;box-shadow:3px 3px 0 var(--green);font-weight:700;font-size:14px}
+footer small{font-size:12px;color:var(--muted)}
+#progress{position:fixed;top:0;right:0;height:5px;width:0;z-index:300;background:var(--green2);box-shadow:0 2px 0 var(--text)}
+.pixel-transition{position:fixed;inset:0;z-index:250;pointer-events:none;display:grid;grid-template-columns:repeat(12,1fr);grid-template-rows:repeat(8,1fr);visibility:hidden}
+.pixel-transition.active{visibility:visible}.pixel-transition span{background:var(--green);transform:scale(0);transition:transform .18s steps(4);border:1px solid #0002}.pixel-transition.active span{transform:scale(1)}.pixel-transition.out span{transform:scale(0);transition-delay:var(--delay,0ms)}
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .35s steps(4),transform .35s steps(4)}.reveal.visible{opacity:1;transform:translateY(0)}
+@keyframes blink{50%{opacity:.25}}@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}@keyframes sun{50%{transform:translateY(5px) rotate(4deg)}}@keyframes iconBob{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+@media(max-width:940px){.hero{grid-template-columns:1fr;gap:10px;padding-top:55px}.hero-art{min-height:390px}.grid3,.sample-grid{grid-template-columns:repeat(2,1fr)}.flow{grid-template-columns:repeat(2,1fr)}.lab{grid-template-columns:1fr}.lab-controls{border-left:0;border-bottom:3px solid var(--text)}.sectionHead{align-items:start;flex-direction:column}.cta{align-items:start;flex-direction:column}}
+@media(max-width:700px){.navbar{padding:10px 14px}.navlinks{display:none;position:absolute;top:75px;right:12px;left:12px;background:var(--surface);border:3px solid var(--text);box-shadow:5px 5px 0 var(--text);padding:8px;flex-direction:column;align-items:stretch}.navlinks.open{display:flex}.navlinks a{padding:11px;border-bottom:1px dashed var(--line)}.menuBtn{display:grid}.wrap{padding:0 17px}.hero{padding-top:42px;padding-bottom:45px;min-height:0}h1{font-size:34px}h2{font-size:28px}.lead{font-size:17px}.hero-art{min-height:330px}.arcade-screen{min-height:205px;margin:12px}.chip-a{right:-4px;top:20px}.chip-b{bottom:10px;left:-3px}.section{padding:55px 0}.grid3,.sample-grid,.lesson-grid,.checklist{grid-template-columns:1fr}.flow{grid-template-columns:1fr 1fr}.flowstep{padding:15px;min-height:150px}.lab-controls,.lab-output{padding:18px}.twofields{grid-template-columns:1fr}.cta{padding:25px}.statline{gap:12px}.brand{font-size:15px}.brand small{font-size:9px}.sectionHead p{font-size:15px}.pixel-transition{grid-template-columns:repeat(8,1fr);grid-template-rows:repeat(12,1fr)}}
+@media(max-width:400px){.flow{grid-template-columns:1fr}.heroBtns .btn{width:100%}.prompt-chip{font-size:10px}.brandmark{width:32px;height:32px}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}.pixel-transition{display:none}.reveal{opacity:1;transform:none}}
+
+/* Self-contained pixel icon system: no external icon CDN required */
+.pixel-icon{display:inline-grid;place-items:center;width:34px;height:34px;color:var(--green2);flex:0 0 auto;filter:drop-shadow(1px 1px 0 var(--text))}
+.pixel-icon svg{display:block;width:100%;height:100%;shape-rendering:crispEdges;image-rendering:pixelated;overflow:visible}
+.card-icon .pixel-icon{width:36px;height:36px}
+.prompt-chip .pixel-icon{width:27px;height:27px}
+.lab-title .pixel-icon{width:31px;height:31px}
+.sample-head .pixel-icon{width:36px;height:36px}
+.output-empty .pixel-icon{width:68px;height:68px;margin-bottom:15px}
+.pixel-icon svg{animation:pixelIconFloat 2.6s steps(4) infinite;transform-origin:center}
+.card-icon:hover .pixel-icon svg,.sample-head:hover .pixel-icon svg{animation:pixelIconPop .45s steps(4) both}
+@keyframes pixelIconFloat{0%,100%{transform:translateY(0)}25%{transform:translateY(-2px)}50%{transform:translateY(0)}75%{transform:translateY(1px)}}
+@keyframes pixelIconPop{0%{transform:scale(1)}35%{transform:scale(1.22) rotate(-8deg)}70%{transform:scale(.92) rotate(6deg)}100%{transform:scale(1)}}
+
+</style>
+</head>
+<body>
+<a class="skip" href="#main">تجاوز إلى المحتوى</a><div id="progress"></div><div class="topline"></div>
+<div class="pixel-transition" id="pixelTransition" aria-hidden="true"></div>
+<header><div class="navbar">
+<a class="brand" href="#home"><span class="brandmark">P//</span><span>Prompt Arcade<small>IDEA → STORY → VIDEO</small></span></a>
+<nav class="navlinks" id="navlinks"><a href="#workflow">طريقة العمل</a><a href="#lab">مختبر البرومبت</a><a href="#learn">الدليل المفصل</a><a href="#samples">أمثلة</a></nav>
+<div class="actions"><button class="iconbtn" id="themeToggle" aria-label="تبديل الوضع"><span id="themeGlyph">☼</span></button><button class="iconbtn menuBtn" id="menuToggle" aria-label="فتح القائمة">☰</button></div>
+</div></header>
+<main id="main">
+<section class="hero wrap" id="home">
+<div class="hero-copy">
+<div class="kicker"><i></i> CHATGPT × GOOGLE VIDS / CREATIVE WORKFLOW</div>
+<h1>خلّي الفكرة<br>تصير <span class="green">فيديو.</span></h1>
+<p class="lead">مختبر تفاعلي يساعدك تستخدم ChatGPT حتى تطلع أفكار قوية، تبني قصة واضحة، وتقسمها إلى مشاهد وبرومبتات جاهزة لتطوير الفيديو داخل Google Vids.</p>
+<div class="heroBtns"><a class="btn primary" href="#lab">ابدأ صناعة البرومبت <span>↙</span></a><a class="btn" href="#learn">تعلّم الطريقة <span>▦</span></a></div>
+<div class="statline"><span><strong>01 / IDEA</strong> اكتشاف الفكرة</span><span><strong>02 / PROMPT</strong> كتابة الوصف</span><span><strong>03 / VIDEO</strong> تجهيز المشاهد</span></div>
+</div>
+<div class="hero-art">
+<div class="arcade">
+<div class="arcade-top"><span>PROMPT ARCADE / BUILD 01</span><span class="lights"><i></i><i></i><i></i></span></div>
+<div class="arcade-screen"><div class="pixel-sun"></div><div class="pixel-mountain"></div><div class="pixel-mountain two"></div><div class="pixel-ground"></div><div class="screen-caption">YOUR IDEA IS THE FIRST FRAME.<br>MAKE IT MOVE.</div></div>
+<div style="padding:0 18px 18px;display:flex;justify-content:space-between;gap:12px;font:10px 'Silkscreen',monospace;direction:ltr"><span>CREATIVE MODE: ON</span><span style="color:var(--green2)">● READY</span></div>
+</div>
+<div class="prompt-chip chip-a"><span data-pixel-icon="brain" aria-hidden="true"></span><span>IDEA ENGINE<br><b>Find the story</b></span></div>
+<div class="prompt-chip chip-b"><span data-pixel-icon="clapperboard" aria-hidden="true"></span><span>SHOT BUILDER<br><b>One scene at a time</b></span></div>
+</div>
+</section>
+
+<section class="section" id="workflow"><div class="wrap">
+<div class="sectionHead reveal"><div><div class="label">01 / THE WORKFLOW</div><h2>لا تبدأ بالبرومبت.<br>ابدأ بالفكرة.</h2></div><p>ChatGPT يساعدك تفكر وتخطط وتكتب وتراجع. Google Vids هو مكان تجميع العمل وتحويله إلى فيديو ومراجعته ومشاركته، حسب الأدوات المتاحة بحسابك.</p></div>
+<div class="grid3">
+<article class="card reveal"><span class="index">STEP 01</span><div class="card-icon"><span data-pixel-icon="brain" aria-hidden="true"></span></div><h3>ولّد الفكرة</h3><p>ابدأ بهدف الفيديو والجمهور. اطلب من ChatGPT زوايا مختلفة، ثم اختر الفكرة الأقوى من حيث الرسالة، والتميّز، وقابلية التنفيذ.</p></article>
+<article class="card reveal"><span class="index">STEP 02</span><div class="card-icon"><span data-pixel-icon="notebook" aria-hidden="true"></span></div><h3>ابنِ القصة</h3><p>حوّل الفكرة إلى افتتاحية، وتطور، وخاتمة. حدّد ما الذي يجب أن يفهمه المشاهد أو يشعر به في كل مشهد، قبل كتابة التفاصيل البصرية.</p></article>
+<article class="card reveal"><span class="index">STEP 03</span><div class="card-icon"><span data-pixel-icon="clapperboard" aria-hidden="true"></span></div><h3>اكتب البرومبت</h3><p>صف الموضوع والفعل والمكان وحركة الكاميرا والإضاءة والأسلوب. اكتب كل لقطة كوحدة واضحة، مع الحفاظ على ثبات الشخصيات والهوية البصرية.</p></article>
+</div>
+</div></section>
+
+<section class="section" id="lab"><div class="wrap">
+<div class="sectionHead reveal"><div><div class="label">02 / INTERACTIVE PROMPT LAB</div><h2>مختبر صناعة البرومبت</h2></div><p>جاوب عن الحقول الأساسية، واضغط «ابنِ الحزمة» لتحصل على فكرة، وملخص قصة، وتقسيم مشاهد، وبرومبت إنجليزي مفصل يمكن نسخه وتعديله.</p></div>
+<div class="lab reveal">
+<div class="lab-controls">
+<div class="lab-title"><span data-pixel-icon="sliders" aria-hidden="true"></span><h3>إعدادات المشروع</h3></div>
+<p class="lab-intro">لا تحتاج تكتب كل شيء من الصفر. عدّل الإعدادات حسب الفيديو الذي تريد صنعه.</p>
+<div class="field"><label for="idea">الفكرة الأولية أو الموضوع</label><textarea id="idea" placeholder="مثال: رحلة طالب يكتشف كيف يستخدم الذكاء الاصطناعي لتعلّم مهارة جديدة...">رحلة طالب يكتشف كيف يحوّل فكرة بسيطة إلى مشروع إبداعي باستخدام الذكاء الاصطناعي</textarea></div>
+<div class="twofields">
+<div class="field"><label for="goal">هدف الفيديو</label><select id="goal"><option value="educational explainer">تعليمي / شرح</option><option value="brand promotional video">إعلان ترويجي</option><option value="cinematic short story">قصة سينمائية قصيرة</option><option value="social media reel">ريلز / سوشيال ميديا</option><option value="product demo">شرح منتج</option><option value="documentary-style story">وثائقي</option></select></div>
+<div class="field"><label for="duration">المدة التقريبية</label><select id="duration"><option value="15 seconds">15 ثانية</option><option value="30 seconds" selected>30 ثانية</option><option value="60 seconds">60 ثانية</option><option value="90 seconds">90 ثانية</option><option value="2 minutes">دقيقتان</option></select></div>
+</div>
+<div class="twofields">
+<div class="field"><label for="ratio">نسبة الأبعاد</label><select id="ratio"><option value="vertical 9:16">عمودي 9:16 — Reels</option><option value="landscape 16:9">أفقي 16:9 — YouTube</option><option value="square 1:1">مربع 1:1</option></select></div>
+<div class="field"><label for="style">الأسلوب البصري</label><select id="style"><option value="cinematic realistic">واقعي سينمائي</option><option value="minimal clean motion graphics">موشن جرافيك بسيط</option><option value="pixel art animation">Pixel Art متحرك</option><option value="documentary naturalism">وثائقي واقعي</option><option value="stylized 3D animation">ثلاثي الأبعاد</option><option value="hand-painted illustration">رسم فني</option></select></div>
+</div>
+<div class="twofields">
+<div class="field"><label for="audience">الجمهور</label><select id="audience"><option value="general audience">جمهور عام</option><option value="students and young adults">طلاب وشباب</option><option value="business professionals">مهنيون وأعمال</option><option value="children and families">أطفال وعائلات</option><option value="social media viewers">جمهور منصات التواصل</option></select></div>
+<div class="field"><label for="voice">الصوت والنص</label><select id="voice"><option value="Arabic voice-over with concise on-screen captions">تعليق عربي + نصوص قصيرة</option><option value="no voice-over, visual storytelling only">بدون تعليق صوتي</option><option value="English voice-over with English captions">تعليق إنجليزي</option><option value="dialogue between two characters">حوار بين شخصيتين</option></select></div>
+</div>
+<div class="field"><label for="details">تفاصيل إضافية (اختياري)</label><input id="details" placeholder="ألوان، شخصية ثابتة، مكان، إحساس، ممنوعات..."></div>
+<button class="btn primary" id="buildBtn" style="width:100%">▦ ابنِ حزمة البرومبت</button>
+<p class="notice">هذه الأداة تبني النص داخل المتصفح فقط؛ لا ترسل بياناتك إلى ChatGPT ولا تنشئ فيديو تلقائياً. انسخ الناتج إلى ChatGPT لطلب تطويره، ثم استخدم المخرجات المناسبة في Google Vids.</p>
+</div>
+<div class="lab-output">
+<div class="lab-title"><span data-pixel-icon="file-text" aria-hidden="true"></span><h3>حزمة المشروع</h3></div>
+<p class="lab-intro">ستظهر النتيجة هنا. ابدأ بإنشاء الحزمة، ثم بدّل بين المخرجات وانسخ الجزء الذي تحتاجه.</p>
+<div class="output-empty" id="emptyState"><div><span data-pixel-icon="sparkles" aria-hidden="true"></span><h3>مساحة العمل جاهزة</h3><p>اختَر تفاصيل فكرتك واضغط زر البناء لبدء العمل.</p></div></div>
+<div class="output-content" id="outputContent">
+<div class="tabs" id="outputTabs"><button class="tab active" data-tab="concept">الفكرة والقصة</button><button class="tab" data-tab="storyboard">تقسيم المشاهد</button><button class="tab" data-tab="prompt">Prompt للفيديو</button><button class="tab" data-tab="chatgpt">Prompt لـ ChatGPT</button></div>
+<div class="prompt-text" id="outputText" aria-live="polite"></div>
+<div class="output-actions"><button class="btn primary" id="copyBtn">نسخ النص</button><button class="btn" id="downloadBtn">تنزيل TXT</button><button class="btn" id="regenerateBtn">تحديث الحزمة</button></div>
+<div class="notice">راجع التفاصيل والأسماء والحقائق قبل النشر. اعتبر النص مسودة أولى قابلة للتعديل، وليس ضماناً لنتيجة بصرية مطابقة تماماً.</div>
+</div>
+</div>
+</div>
+</div></section>
+
+<section class="section" id="learn"><div class="wrap">
+<div class="sectionHead reveal"><div><div class="label">03 / THE FIELD GUIDE</div><h2>الدليل المفصل:<br>كيف تستخدم ChatGPT؟</h2></div><p>تعلّم سير العمل من البداية للنهاية. افتح كل بطاقة واقرأ الخطوات، ثم استخدم مختبر البرومبت لتطبيقها على مشروعك.</p></div>
+<div class="lesson-grid">
+<details class="reveal" open><summary>1. كيف تولّد أفكاراً تستحق التنفيذ؟</summary><div class="detail-body">لا تطلب «أعطني فكرة فيديو» فقط. حدّد المجال والجمهور والهدف والمنصة. اطلب من ChatGPT مجموعة أفكار مختلفة فعلاً، ثم قيّم كل فكرة وفق وضوح الرسالة، والتميّز البصري، وسهولة التنفيذ، وقوة البداية.<div class="example">Act as a creative video strategist. Generate 8 distinct video concepts about [TOPIC] for [AUDIENCE]. For each concept, provide a one-sentence hook, core message, visual metaphor, emotional tone, and production difficulty. Avoid generic ideas and repeated angles. Recommend the strongest 2 and explain why.</div></div></details>
+<details class="reveal"><summary>2. حوّل الفكرة إلى سيناريو قصير</summary><div class="detail-body">بعد اختيار الفكرة، اطلب مخططاً أولاً قبل التفاصيل. قسّم الفيديو إلى افتتاحية تجذب الانتباه، وتطور يقدم المعلومات أو الصراع، وخاتمة تثبّت الرسالة. اجعل كل مشهد يضيف معلومة أو إحساساً جديداً.<div class="example">Turn this selected concept into a [DURATION] video script. Structure it as Hook, Development, and Ending. For every scene include: purpose, visible action, voice-over, on-screen text, estimated duration, and transition idea. Keep the pacing clear and avoid overcrowding the screen.</div></div></details>
+<details class="reveal"><summary>3. اكتب برومبت بصرياً قابلاً للتنفيذ</summary><div class="detail-body">صف ما يجب أن يظهر في اللقطة، وما الذي يحدث فعلياً، وكيف تتحرك الكاميرا، وما شكل الضوء والخلفية. استخدم أفعالاً واضحة مثل slow push-in أو lateral tracking بدلاً من أوصاف عامة مثل «لقطة جميلة». لا تحشر تغييرات كثيرة في لقطة قصيرة واحدة.<div class="example">Create a detailed video prompt for this single shot: [SCENE]. Subject and action: [ACTION]. Environment: [SETTING]. Camera: [MOVEMENT + FRAMING]. Lighting: [LIGHT]. Visual style: [STYLE]. Motion: natural and physically coherent. Composition: [RATIO]. Keep the subject consistent and avoid extra objects, distorted details, random text, or abrupt camera changes.</div></div></details>
+<details class="reveal"><summary>4. حافظ على ثبات الشخصيات والأسلوب</summary><div class="detail-body">إذا تكرر ظهور الشخصية، أنشئ وصفاً ثابتاً لها: العمر التقريبي، الملامح، الملابس، الألوان، الإكسسوارات، وطريقة الحركة. أرفق هذا الوصف مع كل مشهد مهم، ولا تغيّر تفاصيله إلا إذا كان ذلك جزءاً مقصوداً من القصة. كرّر أيضاً وصف لوحة الألوان والإضاءة والبيئة.</div></details>
+<details class="reveal"><summary>5. من ChatGPT إلى Google Vids</summary><div class="detail-body">استخدم ChatGPT للتفكير والتخطيط وصياغة السيناريو والبرومبتات. بعد ذلك افتح Google Vids، وابدأ مشروعاً أو قالباً مناسباً، وأضف النصوص والوسائط والمقاطع المتاحة، ثم رتّب المشاهد واضبط التوقيت والصوت والانتقالات. ميزات الذكاء الاصطناعي والتوليد تختلف حسب الحساب والخطة والمنطقة؛ لا تفترض أن كل برومبت نصي سيُنتج فيديو مباشرة داخل Vids.</div></details>
+<details class="reveal"><summary>6. حسّن النتائج عبر المراجعة</summary><div class="detail-body">لا تطلب «حسّن كل شيء» فقط. أعطِ ملاحظة محددة: اجعل حركة الكاميرا أبطأ، اختصر التعليق إلى 20 كلمة، حافظ على الملابس نفسها، أو اجعل النهاية تتصل ببداية اللقطة. اطلب نسختين أو ثلاثاً عندما تكون المفاضلة الإبداعية أهم من الالتزام بمخرج واحد.</div></details>
+</div>
+</div></section>
+
+<section class="section" id="samples"><div class="wrap">
+<div class="sectionHead reveal"><div><div class="label">04 / STARTER PACKS</div><h2>أمثلة جاهزة<br>تقدر تبدأ منها</h2></div><p>اختَر نوع الفيديو حتى تُحمّل فكرته تلقائياً إلى مختبر البرومبت، وبعدها عدّلها حسب مشروعك.</p></div>
+<div class="sample-grid">
+<article class="card sample reveal"><div class="sample-head"><span data-pixel-icon="lightbulb" aria-hidden="true"></span><h3>فيديو تعليمي</h3></div><div class="sample-body"><p>شرح مفهوم معقّد بلقطات بسيطة، أمثلة مرئية، ونصوص قصيرة.</p><button class="btn sampleBtn" data-idea="شرح كيف تعمل الطاقة الشمسية من ضوء الشمس إلى الكهرباء في المنزل" data-goal="educational explainer">استخدم المثال</button></div></article>
+<article class="card sample reveal"><div class="sample-head"><span data-pixel-icon="megaphone" aria-hidden="true"></span><h3>إعلان قصير</h3></div><div class="sample-body"><p>افتتاحية قوية، إبراز فائدة المنتج، ثم دعوة واضحة لاتخاذ إجراء.</p><button class="btn sampleBtn" data-idea="إعلان سينمائي قصير لمنتج تقني جديد يسهّل تنظيم الوقت" data-goal="brand promotional video">استخدم المثال</button></div></article>
+<article class="card sample reveal"><div class="sample-head"><span data-pixel-icon="clapperboard" aria-hidden="true"></span><h3>قصة سينمائية</h3></div><div class="sample-body"><p>قصة قصيرة تعتمد على صورة قوية وتطور بصري ونهاية ذات معنى.</p><button class="btn sampleBtn" data-idea="رحلة مصور يعثر على رسالة قديمة تغيّر نظرته إلى مدينته" data-goal="cinematic short story">استخدم المثال</button></div></article>
+</div>
+</div></section>
+
+<section class="section" id="checklist"><div class="wrap">
+<div class="sectionHead reveal"><div><div class="label">05 / FINAL CHECK</div><h2>قائمة تدقيق قبل الإنتاج</h2></div><p>استخدم هذه القائمة قبل نقل البرومبت إلى أداة الفيديو أو اعتماد السيناريو النهائي.</p></div>
+<div class="checklist reveal">
+<label class="check"><input type="checkbox"> الهدف والجمهور واضحان من البداية.</label>
+<label class="check"><input type="checkbox"> لكل مشهد فعل بصري رئيسي واحد.</label>
+<label class="check"><input type="checkbox"> حركة الكاميرا والإضاءة محددتان عند الحاجة.</label>
+<label class="check"><input type="checkbox"> الشخصية والألوان متناسقة بين المشاهد.</label>
+<label class="check"><input type="checkbox"> النصوص قصيرة ومناسبة لحجم الشاشة.</label>
+<label class="check"><input type="checkbox"> راجعت الأسماء والحقائق وحقوق الوسائط.</label>
+</div>
+</div></section>
+
+<section class="wrap reveal"><div class="cta"><div><div class="label">READY / SET / CREATE</div><h2>فكرتك هي البداية.</h2><p>استخدم ChatGPT كشريك إبداعي لتطوير الفكرة، ثم رتّب المشروع وحرّره داخل Google Vids. ابدأ صغيراً، شاهد النتيجة، ثم حسّنها خطوة بخطوة.</p></div><div style="display:flex;gap:12px;flex-wrap:wrap"><a class="btn primary" href="#lab">افتح المختبر</a><a class="btn" href="https://vids.new" target="_blank" rel="noreferrer">افتح Google Vids ↗</a></div></div></section>
+</main>
+<footer><div class="footer-inner"><div><div class="brand"><span class="brandmark">P//</span><span>Prompt Arcade<small>IDEA → STORY → VIDEO</small></span></div><small>دليل تعليمي مستقل — ليس منتجاً رسمياً من OpenAI أو Google.</small></div><div class="credit">تصميم: المهندس علي موجد</div><small>Pixel icon reference: <a href="https://www.streamlinehq.com/icons/pixel" target="_blank" rel="noreferrer">Streamline Pixel</a></small></div></footer>
+<script>
+const $=s=>document.querySelector(s);
+const $$=s=>[...document.querySelectorAll(s)];
+
+// Embedded pixel icon library. Icons are local inline SVGs, not remote image requests.
+(function(){
+ const icons={
+ brain:'<rect x="8" y="3" width="8" height="3"/><rect x="5" y="6" width="4" height="3"/><rect x="15" y="6" width="4" height="3"/><rect x="3" y="9" width="4" height="7"/><rect x="17" y="9" width="4" height="7"/><rect x="6" y="15" width="12" height="4"/><rect x="9" y="19" width="6" height="3"/><rect x="10" y="7" width="4" height="10" fill="var(--surface)"/><rect x="8" y="10" width="8" height="2" fill="var(--surface)"/>',
+ notebook:'<rect x="5" y="3" width="15" height="18"/><rect x="3" y="5" width="3" height="2" fill="var(--surface)"/><rect x="3" y="10" width="3" height="2" fill="var(--surface)"/><rect x="3" y="15" width="3" height="2" fill="var(--surface)"/><rect x="8" y="7" width="9" height="2" fill="var(--surface)"/><rect x="8" y="11" width="8" height="2" fill="var(--surface)"/><rect x="8" y="15" width="9" height="2" fill="var(--surface)"/>',
+ clapperboard:'<path d="M3 8h18v13H3z"/><path d="M3 4h18v4H3z"/><path d="M5 4h4l-2 4H3zM13 4h4l-2 4h-4z" fill="var(--surface)"/><rect x="6" y="12" width="3" height="2" fill="var(--surface)"/><rect x="12" y="12" width="3" height="2" fill="var(--surface)"/>',
+ lightbulb:'<rect x="8" y="3" width="8" height="2"/><rect x="5" y="5" width="3" height="7"/><rect x="16" y="5" width="3" height="7"/><rect x="7" y="12" width="10" height="4"/><rect x="9" y="16" width="6" height="3"/><rect x="9" y="20" width="6" height="2"/><rect x="10" y="7" width="4" height="5" fill="var(--surface)"/>',
+ sparkles:'<path d="M11 2h3v5h5v3h-5v5h-3v-5H6V7h5z"/><path d="M18 15h2v3h3v2h-3v3h-2v-3h-3v-2h3z"/><rect x="3" y="14" width="3" height="3"/><rect x="4" y="19" width="2" height="2"/>',
+ 'file-text':'<path d="M5 2h10l5 5v15H5z"/><path d="M15 2v5h5" fill="var(--surface)"/><rect x="8" y="10" width="9" height="2" fill="var(--surface)"/><rect x="8" y="14" width="9" height="2" fill="var(--surface)"/><rect x="8" y="18" width="6" height="2" fill="var(--surface)"/>',
+ camera:'<path d="M3 7h5l2-3h5l2 3h4v13H3z"/><rect x="8" y="10" width="8" height="7" fill="var(--surface)"/><rect x="10" y="12" width="4" height="3"/>',
+ film:'<rect x="4" y="3" width="16" height="18"/><rect x="7" y="6" width="10" height="12" fill="var(--surface)"/><rect x="4" y="6" width="3" height="3" fill="var(--surface)"/><rect x="4" y="14" width="3" height="3" fill="var(--surface)"/><rect x="17" y="6" width="3" height="3" fill="var(--surface)"/><rect x="17" y="14" width="3" height="3" fill="var(--surface)"/><path d="M10 9v6l5-3z"/>',
+ wand:'<path d="M4 18 17 5l3 3L7 21z"/><rect x="15" y="2" width="2" height="3"/><rect x="20" y="10" width="3" height="2"/><rect x="9" y="3" width="2" height="3"/><rect x="20" y="3" width="2" height="3"/>',
+ sliders:'<rect x="3" y="5" width="18" height="2"/><rect x="7" y="3" width="3" height="6"/><rect x="3" y="11" width="18" height="2"/><rect x="14" y="9" width="3" height="6"/><rect x="3" y="17" width="18" height="2"/><rect x="9" y="15" width="3" height="6"/>',
+ 'idea-engine':'<rect x="4" y="4" width="16" height="16"/><rect x="8" y="8" width="8" height="8" fill="var(--surface)"/><rect x="10" y="10" width="4" height="4"/><rect x="10" y="1" width="4" height="3"/><rect x="10" y="20" width="4" height="3"/><rect x="1" y="10" width="3" height="4"/><rect x="20" y="10" width="3" height="4"/>',
+ share:'<rect x="4" y="11" width="5" height="5"/><rect x="15" y="3" width="5" height="5"/><rect x="15" y="16" width="5" height="5"/><path d="M8 12 16 6M8 15l8 3" fill="none" stroke="currentColor" stroke-width="2"/>',
+ play:'<path d="M6 3h4v3h4v3h4v3h3v3h-3v3h-4v3h-4v-3H6z"/>',
+ mic:'<rect x="9" y="3" width="6" height="11"/><rect x="6" y="9" width="3" height="5"/><rect x="15" y="9" width="3" height="5"/><rect x="9" y="16" width="6" height="2"/><rect x="11" y="18" width="2" height="4"/>',
+ video:'<rect x="3" y="5" width="13" height="14"/><path d="M16 10l5-3v10l-5-3z"/><path d="M8 9v6l5-3z" fill="var(--surface)"/>',
+ bulb:'<rect x="8" y="3" width="8" height="2"/><rect x="5" y="5" width="3" height="7"/><rect x="16" y="5" width="3" height="7"/><rect x="7" y="12" width="10" height="4"/><rect x="9" y="16" width="6" height="5"/>',
+ megaphone:'<path d="M3 10h5l11-5v14L8 14H3z"/><rect x="6" y="14" width="4" height="6"/><rect x="19" y="9" width="3" height="2"/><rect x="19" y="14" width="3" height="2"/>',
+};
+ const aliases={sliders:'sliders','file-text':'file-text',sparkles:'sparkles',clapperboard:'clapperboard',notebook:'notebook',brain:'brain',lightbulb:'lightbulb',megaphone:'megaphone',camera:'camera',film:'film',wand:'wand'};
+ function svg(name){
+  let shape=icons[name]||icons[aliases[name]]||icons.sparkles;
+  return '<span class="pixel-icon" aria-hidden="true"><svg viewBox="0 0 24 24" role="img" aria-hidden="true"><g fill="currentColor">'+shape+'</g></svg></span>';
+ }
+ document.querySelectorAll('[data-pixel-icon]').forEach(img=>{
+  const name=img.dataset.pixelIcon||'sparkles';
+  const holder=document.createElement('span');
+  holder.innerHTML=svg(name);
+  const icon=holder.firstElementChild;
+  if(img.closest('.prompt-chip'))icon.style.width='27px';
+  img.replaceWith(icon);
+ });
+})();
+
+const themeBtn=$('#themeToggle'),themeGlyph=$('#themeGlyph');
+function setTheme(t){document.documentElement.dataset.theme=t;themeGlyph.textContent=t==='dark'?'☼':'◐';try{localStorage.setItem('promptArcadeTheme',t)}catch(e){}}
+try{setTheme(localStorage.getItem('promptArcadeTheme')||'dark')}catch(e){setTheme('dark')}
+themeBtn.addEventListener('click',()=>setTheme(document.documentElement.dataset.theme==='dark'?'light':'dark'));
+$('#menuToggle').addEventListener('click',()=>$('#navlinks').classList.toggle('open'));
+$$('#navlinks a').forEach(a=>a.addEventListener('click',()=>$('#navlinks').classList.remove('open')));
+const transition=$('#pixelTransition');
+for(let i=0;i<96;i++){const s=document.createElement('span');s.style.setProperty('--delay',`${((i%12)+Math.floor(i/12))%12*10}ms`);transition.appendChild(s)}
+function wipe(){if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;transition.classList.remove('out');transition.classList.add('active');setTimeout(()=>{transition.classList.add('out');setTimeout(()=>transition.classList.remove('active','out'),260)},160)}
+$$('a[href^="#"]').forEach(a=>a.addEventListener('click',()=>{if(a.getAttribute('href')!=='#')wipe()}));
+window.addEventListener('scroll',()=>{const d=document.documentElement;$('#progress').style.width=(d.scrollTop/(d.scrollHeight-d.clientHeight)*100)+'%'},{passive:true});
+const observer=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');observer.unobserve(e.target)}}),{threshold:.08});
+$$('.reveal').forEach(el=>observer.observe(el));
+const idea=$('#idea'),goal=$('#goal'),duration=$('#duration'),ratio=$('#ratio'),style=$('#style'),audience=$('#audience'),voice=$('#voice'),extra=$('#details');
+let bundle={},activeTab='concept';
+function makeBundle(){
+ const topic=idea.value.trim()||'A creative short video about a useful new idea';
+ const g=goal.value,d=duration.value,r=ratio.value,s=style.value,a=audience.value,v=voice.value,x=extra.value.trim();
+ const details=x?`\nAdditional constraints: ${x}.`:'';
+ const concept=`PROJECT CONCEPT\nTopic: ${topic}\nGoal: ${g}\nAudience: ${a}\nDuration: ${d}\nFormat: ${r}\nVisual direction: ${s}\n\nCORE IDEA\nCreate one clear visual story that communicates the main message quickly. Open with an intriguing visual hook, develop the idea through a small number of purposeful scenes, and end with a memorable final image or takeaway.\n\nSTORY ARC\n1. HOOK — Introduce a striking image or question that makes the viewer curious.\n2. DEVELOPMENT — Show the key action or insight through clear, visually distinct moments.\n3. PAYOFF — Resolve the idea and leave the viewer with one memorable message.\n\nCREATIVE RULE\nEvery scene must add new information or emotion. Keep the story coherent and avoid decorative shots that do not support the message.${details}`;
+ const sceneCount=d==='15 seconds'?3:d==='30 seconds'?4:d==='60 seconds'?6:d==='90 seconds'?7:8;
+ const secs=Math.max(3,Math.floor((parseInt(d)||30)/sceneCount));
+ const scenes=[];
+ const beats=['Hook: an arresting opening image introduces the central question.','Context: reveal the subject and setting clearly.','Action: show the main transformation or discovery.','Detail: use a close-up or visual example to make the idea tangible.','Payoff: reveal the result and emotional meaning.','Closing: finish with a clean final image and a clear takeaway.','Bridge: connect the main idea to the audience.','End card: leave breathing room for a short call to action.'];
+ for(let i=0;i<sceneCount;i++) scenes.push(`SCENE ${String(i+1).padStart(2,'0')} | approx. ${secs}s\nPurpose: ${beats[i%beats.length]}\nVisual action: Show the main subject performing one readable action in a consistent environment.\nCamera: ${i===0?'slow push-in to establish the subject':i%3===1?'controlled lateral tracking shot':i%3===2?'medium shot with a deliberate close-up detail':'steady wide shot, then a subtle push-in'}.\nLighting: coherent, motivated light that supports the chosen mood.\nAudio/text: ${v}. Keep on-screen wording brief and legible.\nTransition: a clean cut or a simple motivated transition into the next scene.`);
+ const storyboard=`STORYBOARD — ${sceneCount} SCENES\n${scenes.join('\n\n')}\n\nCONTINUITY NOTES\n- Keep recurring subjects, clothing, props, color palette, and location consistent.\n- Each shot should have one main action and one clear camera intention.\n- Adjust actual shot duration after reviewing generated or imported footage.`;
+ const prompt=`Create a ${d} ${g} video for ${a}.\n\nCORE CONCEPT\n${topic}\n\nVISUAL DIRECTION\nStyle: ${s}.\nAspect ratio: ${r}.\nPacing: clear, intentional, and appropriate for the selected duration.\nLighting and color: cohesive across all shots, with a strong subject/background separation.\nCamera: use motivated framing and controlled movement; avoid random zooms or abrupt changes.\nStory: begin with a visual hook, build through purposeful scenes, and end on a memorable payoff.\nAudio and text: ${v}. Keep captions short, readable, correctly spelled, and safely within frame.\n\nSHOT DESIGN\nBreak the video into ${sceneCount} distinct scenes. For each scene, define the subject, visible action, environment, framing, camera movement, lighting, audio or text, and transition. Keep one main action per shot and preserve visual continuity between shots.\n\nQUALITY AND CONTINUITY\nUse coherent motion, consistent subject identity, stable geometry, intentional composition, and a consistent visual style. Avoid unnecessary objects, accidental text, visual flicker, warped details, abrupt camera jumps, and cluttered compositions.${details}\n\nDELIVERY NOTE\nTreat this as a creative brief for planning and assembling a video in Google Vids. Generate or import media using the features available in the user's account, then review timing, audio, captions, and transitions manually.`;
+ const chatgpt=`Act as a senior creative director, screenwriter, storyboard artist, and prompt engineer helping me prepare a video for Google Vids.\n\nPROJECT\nTopic: ${topic}\nGoal: ${g}\nAudience: ${a}\nDuration: ${d}\nAspect ratio: ${r}\nVisual style: ${s}\nAudio/text: ${v}\nAdditional notes: ${x||'None supplied'}\n\nTASK\n1. Evaluate the idea and strengthen its hook without changing its core intention.\n2. Give me 3 distinct creative directions, then recommend the strongest one with a brief rationale.\n3. Write a concise voice-over or dialogue script suitable for the duration.\n4. Create a storyboard with numbered scenes and approximate timings.\n5. Write a detailed English video prompt for each scene, describing subject, action, environment, framing, camera movement, lighting, visual style, and transition.\n6. Add continuity notes for recurring people, costumes, props, locations, and color palette.\n7. Provide a short list of production risks and a final quality-control checklist.\n\nRULES\nBe specific and visually concrete. Avoid generic adjectives without visible meaning. Keep one main action per shot. Do not invent factual claims; flag missing information. Keep all scene prompts consistent with the same visual direction. Format the answer with clear headings and copy-ready blocks. If a detail is missing, state a reasonable assumption rather than stopping.${details}`;
+ bundle={concept,storyboard,prompt,chatgpt};activeTab='concept';
+ $('#emptyState').style.display='none';$('#outputContent').classList.add('show');showTab('concept');
+}
+function showTab(tab){activeTab=tab;$$('.tab').forEach(b=>b.classList.toggle('active',b.dataset.tab===tab));$('#outputText').textContent=bundle[tab]||''}
+$('#buildBtn').addEventListener('click',()=>{makeBundle();$('#outputContent').scrollIntoView({behavior:'smooth',block:'nearest'})});
+$('#outputTabs').addEventListener('click',e=>{const b=e.target.closest('[data-tab]');if(b)showTab(b.dataset.tab)});
+$('#copyBtn').addEventListener('click',async()=>{try{await navigator.clipboard.writeText(bundle[activeTab]||'');$('#copyBtn').textContent='تم النسخ ✓';setTimeout(()=>$('#copyBtn').textContent='نسخ النص',1500)}catch(e){const ta=document.createElement('textarea');ta.value=bundle[activeTab]||'';document.body.appendChild(ta);ta.select();document.execCommand('copy');ta.remove();$('#copyBtn').textContent='تم النسخ ✓';setTimeout(()=>$('#copyBtn').textContent='نسخ النص',1500)}});
+$('#downloadBtn').addEventListener('click',()=>{const text=Object.entries(bundle).map(([k,v])=>`========== ${k.toUpperCase()} ==========\n\n${v}`).join('\n\n');const blob=new Blob([text],{type:'text/plain;charset=utf-8'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='prompt-arcade-video-pack.txt';a.click();URL.revokeObjectURL(a.href)});
+$('#regenerateBtn').addEventListener('click',makeBundle);
+$$('.sampleBtn').forEach(b=>b.addEventListener('click',()=>{idea.value=b.dataset.idea;goal.value=b.dataset.goal;$('#lab').scrollIntoView({behavior:'smooth'});wipe()}));
+</script>
+</body></html>
